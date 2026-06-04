@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-bg-base: #050508;
+  --color-bg-alt: #0a0a0f;
+  --color-text-main: #ffffff;
+  --color-text-muted: #888899;
+  --color-accent: #6b4cff;
+  --color-accent-glow: rgba(107, 76, 255, 0.4);
+  --color-accent-secondary: #00d2ff;
+  --font-sans: "Inter", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-bg-base text-text-main font-sans overflow-x-hidden;
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  }
+
+  .glass-panel {
+    @apply bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl;
+  }
+  .glass-card {
+    @apply bg-white/5 border border-white/10 backdrop-blur-lg;
+  }
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent to-accent-secondary bg-clip-text text-transparent;
+  }
+  
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes noise {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 15%); }
+  80% { transform: translate(3%, 5%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+.noise-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.noise-bg::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  animation: noise 2s steps(10) infinite;
+  z-index: 0;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+  color: transparent;
+}
