@@ -44,8 +44,19 @@ function App() {
         <Marquee />
         <ValueProps />
         <Testimonials />
-        <FooterContact />
-        <Footer />
+        
+        {/* GSAP-Style Pinned Footer Overlap */}
+        <div className="relative w-full z-50">
+          {/* This section stays pinned to the top as the next section slides over it */}
+          <div className="sticky top-0 w-full z-0">
+            <FooterContact />
+          </div>
+          {/* This section is the overlapping 'curtain' */}
+          <div className="relative w-full z-10">
+            <Footer />
+          </div>
+        </div>
+
       </div>
     </>
   );

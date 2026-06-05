@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="relative w-full bg-[#F5F5F5] text-black py-2 px-6 md:px-16 rounded-t-[20px] shadow-[0_-10px_30px_rgba(0,0,0,0.15)] z-[70]">
+    <footer className="relative w-full bg-[#F5F5F5] text-black py-2 px-6 md:px-16 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.8)] z-[70]">
       <div className="max-w-7xl mx-auto flex flex-col gap-4">
         
         {/* Top Section: Links Grid */}

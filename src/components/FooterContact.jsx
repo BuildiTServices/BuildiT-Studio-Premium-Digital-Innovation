@@ -10,18 +10,18 @@ const FooterContact = () => {
   };
 
   return (
-    <footer id="contact" className="sticky top-0 w-full h-screen flex flex-col justify-center bg-[#111111] text-[#EBEBEB] px-8 md:px-16 rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.8)] z-[60]">
+    <footer id="contact" className="relative w-full min-h-screen flex flex-col justify-center bg-[#111111] text-[#EBEBEB] rounded-t-[40px] z-[60] overflow-hidden">
       
-      {/* Main Layout Container */}
-      <div className="max-w-7xl mx-auto flex flex-col justify-between h-full w-full py-20">
+      {/* GSAP Pinned Wrapper */}
+      <div className="max-w-7xl mx-auto flex flex-col justify-between h-full w-full py-12 md:py-20 px-6 md:px-16">
         
         {/* Top Section: Heading (Left) & Form (Right) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 w-full items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 w-full items-start">
           
           {/* Left Column: Heading */}
           <div className="lg:col-span-5 flex flex-col justify-start">
             <h2 
-              className="text-5xl md:text-7xl font-heavy leading-none tracking-tighter text-white mb-8"
+              className="text-4xl md:text-7xl font-heavy leading-none tracking-tighter text-white mb-6 md:mb-8"
               style={{ fontFamily: 'Pin Sans MacOS, sans-serif' }}
             >
               Let's build<br/>something great.
@@ -30,23 +30,23 @@ const FooterContact = () => {
 
           {/* Right Column: Minimal Form */}
           <div className="lg:col-span-6 lg:col-start-7 w-full flex flex-col justify-center">
-            <form className="flex flex-col gap-8 w-full font-mono text-sm">
+            <form className="flex flex-col gap-5 md:gap-8 w-full font-mono text-sm">
               
               {/* Top Row: Name and Email */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
                 <input 
                   type="text" 
                   placeholder="Name"
                   value={formData.name}
                   onChange={e => setFormData({...formData, name: e.target.value})}
-                  className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-3 text-white transition-colors placeholder:text-white/40"
+                  className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-2 md:pb-3 text-white transition-colors placeholder:text-white/40"
                 />
                 <input 
                   type="email" 
                   placeholder="Email Address"
                   value={formData.email}
                   onChange={e => setFormData({...formData, email: e.target.value})}
-                  className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-3 text-white transition-colors placeholder:text-white/40"
+                  className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-2 md:pb-3 text-white transition-colors placeholder:text-white/40"
                 />
               </div>
 
@@ -56,7 +56,7 @@ const FooterContact = () => {
                 placeholder="Phone Number"
                 value={formData.phone}
                 onChange={e => setFormData({...formData, phone: e.target.value})}
-                className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-3 text-white transition-colors placeholder:text-white/40 mt-2"
+                className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-2 md:pb-3 text-white transition-colors placeholder:text-white/40 md:mt-2"
               />
 
               {/* Message */}
@@ -64,7 +64,7 @@ const FooterContact = () => {
                 rows="1"
                 placeholder="Tell us about your project..."
                 value={formData.message}
-                className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-3 text-white transition-colors resize-none overflow-hidden placeholder:text-white/40 mt-4"
+                className="w-full bg-transparent border-b border-white/30 focus:border-white outline-none pb-2 md:pb-3 text-white transition-colors resize-none overflow-hidden placeholder:text-white/40 mt-2 md:mt-4"
                 onInput={(e) => {
                   e.target.style.height = 'auto';
                   e.target.style.height = e.target.scrollHeight + 'px';
@@ -73,11 +73,11 @@ const FooterContact = () => {
               />
 
               {/* Submit */}
-              <div className="mt-4 flex justify-end">
+              <div className="mt-2 md:mt-4 flex justify-end">
                 <button 
                   type="button" 
                   onClick={handleEmailClick}
-                  className="bg-white text-black font-bold uppercase tracking-widest px-10 py-3 hover:bg-white/80 transition-colors shadow-lg"
+                  className="bg-white text-black font-bold uppercase tracking-widest px-8 py-2 md:px-10 md:py-3 hover:bg-white/80 transition-colors shadow-lg"
                 >
                   Send
                 </button>
@@ -88,7 +88,7 @@ const FooterContact = () => {
         </div>
 
         {/* Bottom Section: Horizontal Contact Details */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 font-mono text-xs text-white/60 tracking-widest uppercase border-t border-white/10 pt-8 mt-12 w-full mb-24 md:mb-32">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-8 font-mono text-[10px] md:text-xs text-white/60 tracking-widest uppercase border-t border-white/10 pt-6 md:pt-8 mt-8 md:mt-12 w-full mb-8 md:mb-32">
           <div>
             <p className="text-white mb-1 font-bold">Email</p>
             <p>connect.buildit@gmail.com</p>

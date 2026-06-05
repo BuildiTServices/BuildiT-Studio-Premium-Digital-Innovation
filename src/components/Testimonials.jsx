@@ -1,8 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Testimonials = () => {
   const containerRef = useRef(null);
-  const trackRef = useRef(null);
+
+  // Highly optimized GPU-accelerated scroll tracking (Zero JS layout thrashing)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const mobileTrackRef = useRef(null);
+  const [mobileWidth, setMobileWidth] = useState(0);
+
+  useEffect(() => {
+    const measure = () => {
+      if (mobileTrackRef.current) {
+        setMobileWidth(mobileTrackRef.current.scrollWidth - window.innerWidth);
+      }
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  // Pixel-perfect interpolation based on actual DOM width
+  const mobileX = useTransform(scrollYProgress, [0, 0.6], [0, -mobileWidth]);
+  
+  // Desktop track is exactly 200vw wide, moving by exactly 100vw (50% of its width)
+  // Framer motion can safely interpolate matching string units like "0vw" and "-100vw"
+  const desktopX = useTransform(scrollYProgress, [0, 0.6], ["0vw", "-100vw"]);
 
   // Premium color system expanded to 7 colors
   const colors = [
@@ -25,27 +52,6 @@ const Testimonials = () => {
     { text: "Their mastery of modern UI, typography, and motion is unmatched in the industry.", name: "SAMIRA ALI", role: "CD, BRANDCO" }
   ];
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current || !trackRef.current) return;
-      
-      const containerRect = containerRef.current.getBoundingClientRect();
-      
-      // Calculate scroll progress over exactly 200vh
-      const scrollDistance = 2 * window.innerHeight;
-      const scrollProgress = -containerRect.top / scrollDistance;
-      const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
-      
-      // The track is 200vw wide, move it by max 100vw
-      const maxTranslate = trackRef.current.scrollWidth - window.innerWidth;
-      trackRef.current.style.transform = `translate3d(${-clampedProgress * maxTranslate}px, 0, 0)`;
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const scenes = [
     allReviews.slice(0, 4),
     allReviews.slice(4, 7)
@@ -53,20 +59,18 @@ const Testimonials = () => {
 
   const getCardStyle = (sceneIndex, idx) => {
     if (sceneIndex === 0) {
-      const styles = [
+      return [
         { top: '20%', left: '5%', rotate: '-6deg', zIndex: 10 },
-        { top: '45%', left: '30%', rotate: '4deg', zIndex: 20 },
-        { top: '25%', left: '55%', rotate: '-2deg', zIndex: 30 },
-        { top: '50%', left: '80%', rotate: '8deg', zIndex: 40 }
-      ];
-      return styles[idx];
+        { top: '45%', left: '25%', rotate: '4deg', zIndex: 20 },
+        { top: '25%', right: '25%', left: 'auto', rotate: '-2deg', zIndex: 30 },
+        { top: '50%', right: '5%', left: 'auto', rotate: '8deg', zIndex: 40 }
+      ][idx];
     } else {
-      const styles = [
+      return [
         { top: '30%', left: '10%', rotate: '-4deg', zIndex: 10 },
-        { top: '50%', left: '40%', rotate: '5deg', zIndex: 20 },
-        { top: '20%', left: '70%', rotate: '-6deg', zIndex: 30 }
-      ];
-      return styles[idx];
+        { top: '50%', left: '35%', rotate: '5deg', zIndex: 20 },
+        { top: '20%', right: '10%', left: 'auto', rotate: '-6deg', zIndex: 30 }
+      ][idx];
     }
   };
 
@@ -85,11 +89,11 @@ const Testimonials = () => {
       `}</style>
 
       {/* Sticky Viewport Visual Card */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center bg-[#F5F5F5] text-black rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] pointer-events-auto">
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center bg-[#F5F5F5] text-black rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.8)] pointer-events-auto">
         
         {/* Title layer fixed in the background */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full px-6 md:px-16 text-center z-0 pointer-events-none">
-           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-black/60 mb-6">
+        <div className="absolute top-20 md:top-20 left-1/2 -translate-x-1/2 w-full px-6 md:px-16 text-center z-0 pointer-events-none mt-4 md:mt-0">
+           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-black/60 mb-4 md:mb-6">
             [ CLIENT FEEDBACK ]
           </p>
           <h2 className="text-4xl md:text-6xl font-heavy uppercase tracking-tighter" style={{ fontFamily: 'Pin Sans MacOS, sans-serif' }}>
@@ -97,12 +101,34 @@ const Testimonials = () => {
           </h2>
         </div>
 
-        {/* Horizontal Moving Track */}
-        <div ref={trackRef} className="flex h-full w-[200vw] will-change-transform z-10 pt-32">
-          
+        {/* ========================================= */}
+        {/* MOBILE & TABLET TRACK: Clean Systemic Scroll */}
+        {/* ========================================= */}
+        <motion.div ref={mobileTrackRef} style={{ x: mobileX, willChange: 'transform' }} className="lg:hidden flex h-full z-10 pt-40 px-8 gap-6 items-center w-max">
+          {allReviews.map((review, idx) => (
+            <div 
+              key={idx} 
+              className={`w-[280px] md:w-[320px] shrink-0 p-6 flex flex-col justify-between ${colors[idx]} text-white rounded-2xl shadow-lg border border-white/10`}
+            >
+              <p className="text-base font-medium leading-relaxed mb-8 tracking-tight text-white/90">
+                "{review.text}"
+              </p>
+              <div className="flex flex-col gap-1 font-mono text-[9px] uppercase tracking-widest text-white/50">
+                <span className="font-bold text-white">{review.name}</span>
+                <span>{review.role}</span>
+              </div>
+            </div>
+          ))}
+          {/* Empty spacer at the end so the last card doesn't hug the right edge */}
+          <div className="w-[10vw] md:w-[5vw] shrink-0"></div>
+        </motion.div>
+
+        {/* ========================================= */}
+        {/* DESKTOP TRACK: Chaotic Overlapping Scenes */}
+        {/* ========================================= */}
+        <motion.div style={{ x: desktopX, willChange: 'transform' }} className="hidden lg:flex h-full w-[200vw] z-10 pt-32">
           {scenes.map((scene, sceneIndex) => (
             <div key={sceneIndex} className="relative w-screen h-full shrink-0">
-              
               {scene.map((review, idx) => {
                 const position = getCardStyle(sceneIndex, idx);
                 const colorIndex = sceneIndex === 0 ? idx : idx + 4;
@@ -119,7 +145,7 @@ const Testimonials = () => {
                     }}
                   >
                     <div 
-                      className={`w-[300px] md:w-[380px] p-8 md:p-10 ${colors[colorIndex]} text-white border border-white/10 rounded-2xl shadow-xl backdrop-blur-md transition-all duration-500 ease-out group cursor-pointer origin-center`}
+                      className={`w-[380px] p-10 ${colors[colorIndex]} text-white border border-white/10 rounded-2xl shadow-xl backdrop-blur-md transition-all duration-500 ease-out group cursor-pointer origin-center`}
                       style={{ transform: `rotate(${position.rotate})` }}
                       onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'rotate(0deg) scale(1.05) translateY(-10px)';
@@ -132,10 +158,9 @@ const Testimonials = () => {
                         e.currentTarget.parentElement.style.zIndex = position.zIndex;
                       }}
                     >
-                      {/* Subtle Glass Reflection */}
                       <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-2xl"></div>
                       
-                      <p className="text-lg md:text-xl font-medium leading-relaxed mb-12 tracking-tight text-white/90 relative z-10">
+                      <p className="text-xl font-medium leading-relaxed mb-12 tracking-tight text-white/90 relative z-10">
                         "{review.text}"
                       </p>
                       <div className="flex flex-col gap-1 font-mono text-[10px] uppercase tracking-widest text-white/50 relative z-10">
@@ -146,11 +171,9 @@ const Testimonials = () => {
                   </div>
                 );
               })}
-
             </div>
           ))}
-
-        </div>
+        </motion.div>
 
       </div>
     </section>

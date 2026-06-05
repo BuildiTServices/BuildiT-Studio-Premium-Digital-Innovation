@@ -2,7 +2,7 @@ import React from 'react';
 
 const CompanyOverview = () => {
   return (
-    <section id="about" className="sticky top-0 w-full min-h-screen flex flex-col justify-center px-6 md:px-16 bg-[#F5F5F5] text-black overflow-hidden rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.15)] z-10 py-24">
+    <section id="about" className="-mt-[100vh] sticky top-0 w-full min-h-screen flex flex-col justify-center px-6 md:px-16 bg-[#F5F5F5] text-black overflow-hidden rounded-t-[40px] shadow-[0_-20px_50px_rgba(0,0,0,0.8)] z-10 py-24">
       <div className="max-w-5xl mx-auto relative z-10 text-center">
         <p className="text-xs font-bold tracking-[0.3em] uppercase mb-10 text-black/60">
           [ WHO WE ARE ]
