@@ -31,15 +31,15 @@ const HeroCTA = () => {
             
             {/* Top Headline */}
             <div className="mb-10 md:mb-16">
-              <h1 className="text-[10vw] sm:text-[9vw] md:text-[6rem] lg:text-[8rem] leading-[0.85] md:leading-[0.9] font-heavy tracking-tight md:tracking-tighter uppercase whitespace-nowrap w-full" style={{ fontFamily: 'Pin Sans MacOS, sans-serif' }}>
+              <h1 className="text-[11.5vw] sm:text-[10vw] md:text-[6rem] lg:text-[8rem] leading-[0.85] md:leading-[0.9] font-black tracking-tight md:tracking-tighter uppercase whitespace-nowrap w-full" style={{ fontFamily: 'Pin Sans MacOS, sans-serif' }}>
                 <motion.div style={{ x: x1, willChange: "transform" }}>
-                  <span className="[text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]">CRAFTING</span>
+                  <span className="text-white [-webkit-text-stroke:2px_#3B28CC] md:[-webkit-text-stroke:0px] [text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]">CRAFTING</span>
                 </motion.div>
                 <motion.div style={{ x: x2, willChange: "transform" }}>
-                  <span className="text-white md:text-transparent [text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]" style={{ WebkitTextStroke: '2px white' }}>WORLD-CLASS</span>
+                  <span className="text-white md:text-transparent [-webkit-text-stroke:2px_#3B28CC] md:[-webkit-text-stroke:2px_white] [text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]">WORLD-CLASS</span>
                 </motion.div>
                 <motion.div style={{ x: x3, willChange: "transform" }}>
-                  <span className="[text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]">SOFTWARE</span>
+                  <span className="text-white [-webkit-text-stroke:2px_#3B28CC] md:[-webkit-text-stroke:0px] [text-shadow:0_2px_4px_rgba(0,0,0,0.8)] md:[text-shadow:none]">SOFTWARE</span>
                 </motion.div>
               </h1>
             </div>

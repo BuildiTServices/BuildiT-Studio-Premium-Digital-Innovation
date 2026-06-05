@@ -184,7 +184,7 @@ const WebsiteMockups = ({ scrollProgress }) => {
              </div>
           </div>
           <div className="h-1/3 w-full bg-[#1a2540] rounded-sm flex items-center p-3 mt-1">
-            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-blue-500 mr-3 shrink-0"></div>
+            <img src="/avatar.jpg" alt="Avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full mr-3 shrink-0 object-cover bg-[#0b101e] border border-white/10" />
             <div className="flex flex-col gap-1 w-full">
               <div className="h-1.5 w-1/2 bg-white/20 rounded"></div>
               <div className="h-1.5 w-1/4 bg-white/10 rounded"></div>

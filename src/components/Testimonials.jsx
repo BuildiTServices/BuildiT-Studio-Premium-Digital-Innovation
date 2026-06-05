@@ -61,15 +61,15 @@ const Testimonials = () => {
     if (sceneIndex === 0) {
       return [
         { top: '20%', left: '5%', rotate: '-6deg', zIndex: 10 },
-        { top: '45%', left: '25%', rotate: '4deg', zIndex: 20 },
-        { top: '25%', right: '25%', left: 'auto', rotate: '-2deg', zIndex: 30 },
-        { top: '50%', right: '5%', left: 'auto', rotate: '8deg', zIndex: 40 }
+        { top: '45%', left: '30%', rotate: '4deg', zIndex: 20 },
+        { top: '25%', left: '55%', rotate: '-2deg', zIndex: 30 },
+        { top: '50%', left: '80%', rotate: '8deg', zIndex: 40 }
       ][idx];
     } else {
       return [
         { top: '30%', left: '10%', rotate: '-4deg', zIndex: 10 },
-        { top: '50%', left: '35%', rotate: '5deg', zIndex: 20 },
-        { top: '20%', right: '10%', left: 'auto', rotate: '-6deg', zIndex: 30 }
+        { top: '50%', left: '40%', rotate: '5deg', zIndex: 20 },
+        { top: '20%', left: '70%', rotate: '-6deg', zIndex: 30 }
       ][idx];
     }
   };
